@@ -117,7 +117,7 @@ void resize(int w, int h)
 
 int main(int argc, char** argv)
 {
-  cap.open(-1);
+  cap.open(0);
 
   if (!cap.isOpened())
   {
