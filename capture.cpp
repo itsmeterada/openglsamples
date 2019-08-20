@@ -46,12 +46,12 @@ void display()
   glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  glColor3f(1.0f, 0.0f, 0.0f);
 
   glBindTexture(GL_TEXTURE_2D, texId);
   glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, frame.cols, frame.rows,
     GL_BGR, GL_UNSIGNED_BYTE, (void *)frame.ptr(0));
 
+  glColor3f(1.0f, 1.0f, 1.0f);
   glBegin(GL_TRIANGLE_STRIP);
     glTexCoord2f(0.0f, 0.0f); glVertex2f(-0.5f * aspect,  0.5f);
     glTexCoord2f(0.0f, texv); glVertex2f(-0.5f * aspect, -0.5f);
@@ -88,7 +88,7 @@ void initGL(int w, int h)
   cout << "texuv = " << texu << ", " << texv << "\n";
 
   glEnable(GL_TEXTURE_2D);
-  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
   glGenTextures(1, &texId);
   glBindTexture(GL_TEXTURE_2D, texId);
