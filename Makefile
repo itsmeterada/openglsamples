@@ -41,4 +41,4 @@ capture: capture.o
 	$(CXX) -o $@ $@.o $(LDFLAGS)
 
 clean:
-	rm -f $(PROGS) $(OBJS) core
+	rm -f $(PROGS) *.o core
