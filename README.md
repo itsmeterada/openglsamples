@@ -1,5 +1,6 @@
 # openglsamples
 A collection of simple OpenGL code samples.
+I tried to make these samples compatible across Windows/macOS/Linux as much as possible.
 
 - simple.cpp : A very simple textured quad sample.
 - capture.cpp : An OpenCV video capture to a texture sample.
