@@ -1,4 +1,4 @@
-PROGS	= simple capture 
+PROGS	= simple capture facedetect
 ALL:	$(PROGS)
 
 CC = gcc
@@ -11,8 +11,10 @@ else
 CXXFLAGS = `pkg-config opencv --cflags`
 endif
 CXXFLAGS += -D_THREAD_SAFE
-CXXFLAGS +=  -O0 -g
+CXXFLAGS +=  -O3 -g
 CXXFLAGS +=  -std=c++11
+
+DLIBDIR = /home/axengr/trees/dlib-19.18/
 
 ifeq ($(shell uname),Darwin)
 LIBS = `pkg-config opencv4 --libs`
@@ -39,6 +41,18 @@ simple: simple.o
 capture: capture.o
 	rm -f $@
 	$(CXX) -o $@ $@.o $(LDFLAGS)
+
+facedetect.o: facedetect.cpp
+	rm -f facedetect.o
+	$(CXX) -DUSE_AVX_INSTRUCTIONS=ON -I$(DLIBDIR) $(CXXFLAGS) -c -o $@ facedetect.cpp
+
+#facedetect: facedetect.o
+#	rm -f $@
+#	$(CXX) -DUSE_AVX_INSTRUCTIONS=ON -I$(DLIBDIR) $(DLIBDIR)/dlib/all/source.cpp -o $@ $@.o $(LDFLAGS) -lpthread -lX11
+
+facedetect: facedetect.o
+	rm -f $@
+	$(CXX) -I$(DLIBDIR) -o $@ $@.o $(LDFLAGS) $(DLIBDIR)/build/dlib/libdlib.a -lpthread -lX11
 
 clean:
 	rm -f $(PROGS) *.o core
