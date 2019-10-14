@@ -1,5 +1,5 @@
 //  (Windows) g++ -o facedetect{,.cpp} -lopengl32 -lfreeglut (need opencv and dlib)
-//  (Linux/Mac) g++ -o facedetect{,.cpp} -I$DLIBDIR `pkg-config opencv --cflags --libs` -LDLIBDIR -ldlib -lglut -lGLU -lGL
+//  (Linux/Mac) g++ -o facedetect{,.cpp} -I$DLIBDIR `pkg-config opencv --cflags --libs` -L$DLIBDIR -ldlib -lglut -lGLU -lGL
 //
 // This sample shows how to use the dlib's facedetection feature.
 //
