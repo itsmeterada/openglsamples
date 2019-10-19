@@ -20,6 +20,7 @@ ifeq ($(shell uname),Darwin)
 LIBS = `pkg-config opencv4 --libs`
 #LIBS += `pkg-config freeglut --libs`
 LIBS += -framework GLUT -framework OpenGL -framework Cocoa
+LIBS += -L/opt/X11/lib
 else
 LIBS = `pkg-config opencv --libs`
 LIBS += -lglut -lGLU -lGL
