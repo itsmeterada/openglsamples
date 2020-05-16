@@ -1,4 +1,4 @@
-PROGS	= simple capture facedetect glfwtest
+PROGS	= simple capture glfwtest facedetect
 ALL:	$(PROGS)
 
 CC = gcc
@@ -8,7 +8,7 @@ ifeq ($(shell uname),Darwin)
 CXXFLAGS = `pkg-config opencv4 --cflags`
 CXXFLAGS += `pkg-config freeglut --cflags`
 else
-CXXFLAGS = `pkg-config opencv --cflags`
+CXXFLAGS = `pkg-config opencv4 --cflags`
 endif
 CXXFLAGS += -D_THREAD_SAFE
 CXXFLAGS +=  -O3 -g
@@ -22,7 +22,7 @@ LIBS = `pkg-config opencv4 --libs`
 LIBS += -framework GLUT -framework OpenGL -framework Cocoa
 LIBS += -L/opt/X11/lib
 else
-LIBS = `pkg-config opencv --libs`
+LIBS = `pkg-config opencv4 --libs`
 LIBS += -lglut -lGLU -lGL
 endif
 LDFLAGS = $(LIBS)
