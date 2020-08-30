@@ -7,6 +7,11 @@ CXX = g++
 ifeq ($(shell uname),Darwin)
 CXXFLAGS = `pkg-config opencv4 --cflags`
 CXXFLAGS += `pkg-config freeglut --cflags`
+endif
+
+ifeq ($(shell uname),MINGW64_NT-10.0-18363)
+CXXFLAGS = `pkg-config opencv4 --cflags`
+CXXFLAGS += `pkg-config freeglut --cflags`
 else
 CXXFLAGS = `pkg-config opencv4 --cflags`
 endif
@@ -21,6 +26,12 @@ LIBS = `pkg-config opencv4 --libs`
 #LIBS += `pkg-config freeglut --libs`
 LIBS += -framework GLUT -framework OpenGL -framework Cocoa
 LIBS += -L/opt/X11/lib
+endif
+ifeq ($(shell uname),MINGW64_NT-10.0-18363)
+LIBS = `pkg-config opencv4 --libs`
+LIBS += `pkg-config freeglut --libs`
+#LIBS += -lGLU -lGL
+LIBS += -lglu32 -lopengl32
 else
 LIBS = `pkg-config opencv4 --libs`
 LIBS += -lglut -lGLU -lGL
