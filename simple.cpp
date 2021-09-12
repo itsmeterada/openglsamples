@@ -118,6 +118,7 @@ int main(int argc, char** argv)
   glutDisplayFunc(display);
   glutReshapeFunc(resize);
   glutMouseFunc(mouse);
+  glutIdleFunc(idle);
   glutMainLoop();
 
   return EXIT_SUCCESS;
