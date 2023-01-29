@@ -1,4 +1,4 @@
-PROGS	= simple capture glfwtest facedetect
+PROGS	= simple capture glfwtest facedetect sdl2_ogl 
 ALL:	$(PROGS)
 
 CC = gcc
@@ -7,13 +7,17 @@ CXX = g++
 ifeq ($(shell uname),Darwin)
 CXXFLAGS = `pkg-config opencv4 --cflags`
 CXXFLAGS += `pkg-config freeglut --cflags`
+CXXFLAGS += `pkg-config sdl2 --cflags`
 endif
 
-ifeq ($(shell uname),MINGW64_NT-10.0-18363)
-CXXFLAGS = `pkg-config opencv4 --cflags`
-CXXFLAGS += `pkg-config freeglut --cflags`
+#ifeq ($(shell uname),MINGW64_NT-10.0-)
+ifeq ($(shell uname | cut -b 1-10),MINGW64_NT)
+# CXXFLAGS = `pkg-config opencv4 --cflags`
+# CXXFLAGS += `pkg-config freeglut --cflags`
+CXXFLAGS += `pkg-config sdl2_ttf --cflags`
 else
 CXXFLAGS = `pkg-config opencv4 --cflags`
+CXXFLAGS += `pkg-config sdl2 --cflags`
 endif
 CXXFLAGS += -D_THREAD_SAFE
 CXXFLAGS +=  -O3 -g
@@ -27,13 +31,15 @@ LIBS = `pkg-config opencv4 --libs`
 LIBS += -framework GLUT -framework OpenGL -framework Cocoa
 LIBS += -L/opt/X11/lib
 endif
-ifeq ($(shell uname),MINGW64_NT-10.0-18363)
+ifeq ($(shell uname | cut -b 1-10),MINGW64_NT)
 LIBS = `pkg-config opencv4 --libs`
 LIBS += `pkg-config freeglut --libs`
+LIBS += `pkg-config sdl2_ttf --libs`
 #LIBS += -lGLU -lGL
 LIBS += -lglu32 -lopengl32
 else
 LIBS = `pkg-config opencv4 --libs`
+LIBS += `pkg-config sdl2 --libs`
 LIBS += -lglut -lGLU -lGL
 endif
 LDFLAGS = $(LIBS)
@@ -58,14 +64,17 @@ facedetect.o: facedetect.cpp
 	rm -f facedetect.o
 	$(CXX) -DUSE_AVX_INSTRUCTIONS=ON -I$(DLIBDIR) $(CXXFLAGS) -c -o $@ facedetect.cpp
 
-
-#facedetect: facedetect.o
-#	rm -f $@
-#	$(CXX) -DUSE_AVX_INSTRUCTIONS=ON -I$(DLIBDIR) $(DLIBDIR)/dlib/all/source.cpp -o $@ $@.o $(LDFLAGS) -lpthread -lX11
+sdl2_ogl: sdl2_ogl.o
+	rm -f $@
+ 	$(CXX) -o $@ $@.o $(LDFLAGS)
 
 facedetect: facedetect.o
 	rm -f $@
-	$(CXX) -I$(DLIBDIR) -o $@ $@.o $(LDFLAGS) $(DLIBDIR)/build/dlib/libdlib.a -lpthread -lX11
+	$(CXX) -DUSE_AVX_INSTRUCTIONS=ON -I$(DLIBDIR) $(DLIBDIR)/dlib/all/source.cpp -o $@ $@.o $(LDFLAGS) -lpthread -lX11
+
+# facedetect: facedetect.o
+# 	rm -f $@
+# 	$(CXX) -I$(DLIBDIR) -o $@ $@.o $(LDFLAGS) $(DLIBDIR)/build/dlib/libdlib.a -lpthread -lX11
 
 glfwtest.o: glfwtest.cpp
 	rm -f glfwtest.o
