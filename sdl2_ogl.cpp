@@ -5,7 +5,6 @@
 using namespace std;
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_opengl.h>
 #include <GL/glu.h>
 
@@ -14,7 +13,6 @@ using namespace std;
 
 SDL_Window *window = nullptr;
 SDL_GLContext context;
-TTF_Font *font = nullptr;
 GLuint texId;
 
 void init(void)
@@ -111,9 +109,6 @@ int main(int argc, char * argv[])
 
   init();
 
-  TTF_Init();
-  font = TTF_OpenFont("arial.ttf", 12);
-
   std::cout << "Hot keys:" << std::endl;
   std::cout << "\tESC - quit the program" << std::endl;
   std::cout << "\tp - pause video" << std::endl;
@@ -160,8 +155,6 @@ int main(int argc, char * argv[])
       SDL_Delay(10);
     }
 
-    TTF_CloseFont(font);
-    TTF_Quit();
 
     SDL_DestroyWindow(window);
     SDL_Quit();

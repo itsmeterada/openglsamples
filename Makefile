@@ -66,7 +66,7 @@ facedetect.o: facedetect.cpp
 
 sdl2_ogl: sdl2_ogl.o
 	rm -f $@
- 	$(CXX) -o $@ $@.o $(LDFLAGS)
+	$(CXX) -o $@ $@.o $(LDFLAGS)
 
 facedetect: facedetect.o
 	rm -f $@
